@@ -87,7 +87,7 @@ public class PostService {
         // post 내용 수정
         post.update(requestDto);
 
-        return new ResponseEntity<>(postRepository.findById(id)
+        return new ResponseEntity<>(new PostResponseDto(post)
                 ,null, HttpStatus.OK);
     }
 
