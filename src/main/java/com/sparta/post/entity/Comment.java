@@ -1,6 +1,7 @@
 package com.sparta.post.entity;
 
 import com.sparta.post.dto.CommentRequestDto;
+import com.sparta.post.listener.LikesListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Comparator;
 @Setter
 @Table(name = "comment")
 @NoArgsConstructor
+@EntityListeners(LikesListener.class)
 public class Comment extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,9 @@ public class Comment extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Transient
+    private Long likes;
 
     public Comment(CommentRequestDto requestDto, String username) {
         this.content = requestDto.getContent();

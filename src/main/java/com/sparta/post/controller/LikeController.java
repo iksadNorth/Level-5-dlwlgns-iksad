@@ -21,4 +21,10 @@ public class LikeController {
                                       @AuthenticationPrincipal UserDetailsImpl principal)  {
         return likeService.togglePostLikes(id, principal.getUser());
     }
+
+    @PostMapping("/comment/{id}/likes")
+    public ResponseEntity<?> createComment(@PathVariable Long id,
+                                        @AuthenticationPrincipal UserDetailsImpl principal)  {
+        return likeService.toggleCommentLikes(id, principal.getUser());
+    }
 }

@@ -19,6 +19,8 @@ public class ForResponseComment {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+    private Long commentLikes;
+
 
     public ForResponseComment(Comment comment){
         this.id = comment.getId();
@@ -26,6 +28,7 @@ public class ForResponseComment {
         this.username = comment.getUsername();
         this.createdAt = comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
+        this.commentLikes = comment.getLikes();
     }
 
 
