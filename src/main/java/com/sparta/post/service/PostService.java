@@ -40,9 +40,6 @@ public class PostService {
 
         //RequestDto -> Entity
         Post post = new Post(requestDto, username);
-        System.out.println("-------------------------------------------------");
-        System.out.println(post.getCategory());
-        System.out.println("-------------------------------------------------");
         //DB 저장
         Post savePost = postRepository.save(post);
 
