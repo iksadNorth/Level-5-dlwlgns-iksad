@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,14 +28,21 @@ public class Post extends Timestamped{
 
     @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "username", nullable = false)
-    private String username;
+
+    @CreatedBy
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "content", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    private List<PostLike> postLikeList = new ArrayList<>();
 
     @Transient
     private Long likes;
@@ -42,7 +50,6 @@ public class Post extends Timestamped{
     public Post(PostRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.username = username;
     }
 
     public void update(PostRequestDto requestDto){
@@ -54,5 +61,7 @@ public class Post extends Timestamped{
         comment.setPost(this);
     }
 
-
+    public String getUsername() {
+        return this.user == null ? "[UNKNOWN]" : this.user.getUsername();
+    }
 }

@@ -51,4 +51,14 @@ public class UserService {
 
         return new ResponseEntity<>(msg, null, HttpStatus.OK);
     }
+
+    public ResponseEntity<Message> deleteById(Long id) {
+        User entity = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
+
+        userRepository.delete(entity);
+
+        Message msg = new Message(200, "회원 삭제 성공");
+        return new ResponseEntity<>(msg, null, HttpStatus.OK);
+    }
 }
