@@ -13,6 +13,9 @@ import com.sparta.post.repository.CommentRepository;
 import com.sparta.post.repository.PostRepository;
 import com.sparta.post.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,18 +48,30 @@ public class PostService {
         return new ResponseEntity<>(new PostResponseDto(savePost),null, HttpStatus.OK);
     }
 
-    @Transactional(readOnly = true)
-    public PostResponseListDto getPosts(){
-        // comment : post  -> N : 1
-        // commentList -> postId 기준으로 불러온다.
-        List<Post> postList = postRepository.findAllByOrderByCreatedAt();
+//    @Transactional(readOnly = true)
+//    public PostResponseListDto getPosts(Pageable pageable){
+//        // comment : post  -> N : 1
+//        // commentList -> postId 기준으로 불러온다.
+//        Page<Post> postList = postRepository.findAllByOrderByCreatedAt();
+//        Page<PostResponseDto> postResponseDtoList = new Page<>() ;
+//            postRepository.findAllByOrderByCreatedAt(createPost(), pageable).map(PostResponseDto::from);
+//        for(Post post : postList){
+//            PostResponseDto postRes = new PostResponseDto(post);
+//            postResponseDtoList.add(postRes);
+//        }
+//        //return new PostResponseListDto((List<PostResponseDto>) postResponseDtoList);
+//        //return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
+//    }
+
+    public Page<PostResponseDto> getPosts(Pageable pageable) {
+        Page<Post> postPage = postRepository.findAllByOrderByCreatedAt(pageable);
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-        for(Post post : postList){
-            PostResponseDto postRes = new PostResponseDto(post);
-            postResponseDtoList.add(postRes);
+
+        for(Post post: postPage){
+            postResponseDtoList.add(new PostResponseDto(post));
         }
-        return new PostResponseListDto(postResponseDtoList);
-        //return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
+
+        return new PageImpl<>(postResponseDtoList, pageable, postPage.getTotalElements());
     }
 
     @Transactional(readOnly = true)
@@ -107,7 +122,6 @@ public class PostService {
         User user = userRepository.findByUsername(username).orElseThrow(() ->
                 new IllegalArgumentException("토큰이 이상합니다.")
         );
-        System.out.println("HEHEHEHEHEHEHEHEH");
         if(user.getRole().equals(UserRoleEnum.ADMIN)){
             System.out.println("운영자가 로그인하였습니다.");
         }else if(!username.equals(post.getUsername())){
@@ -126,5 +140,6 @@ public class PostService {
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
         );
     }
+
 
 }

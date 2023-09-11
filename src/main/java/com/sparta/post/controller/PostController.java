@@ -8,13 +8,17 @@ import com.sparta.post.entity.Message;
 import com.sparta.post.entity.Post;
 import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.service.PostService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+@Slf4j
 @RestController
 // Json 형태로 객체 데이터를 반환
 // @ResponseBody + @Controller
@@ -36,10 +40,8 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public PostResponseListDto getPosts(){
-        PostResponseListDto dto = postService.getPosts();
-        System.out.println("hello");
-        return dto;
+    public Page<PostResponseDto> getPosts(@PageableDefault(size=5) Pageable pageable){
+        return postService.getPosts(pageable);
     }
 
     // @RequestBody -> Json 기반의 메시지를 사용하는 요청의 경우
