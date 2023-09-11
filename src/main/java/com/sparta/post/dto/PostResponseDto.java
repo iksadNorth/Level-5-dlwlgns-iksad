@@ -23,6 +23,7 @@ public class PostResponseDto{
   //  private String comments;
     private List<ForResponseComment> comments = new ArrayList<>();
 //    private List<CommentResponseDto> commentResponseDto = new ArrayList<>();
+    private Long postLikes;
 
     public PostResponseDto(Post post) {
         Comparator<ForResponseComment> comparator = new Comparator<ForResponseComment>() {
@@ -48,5 +49,7 @@ public class PostResponseDto{
             comments.add(cm);
         }
         Collections.sort(comments, comparator);
+
+        this.postLikes = post.getLikes();
     }
 }

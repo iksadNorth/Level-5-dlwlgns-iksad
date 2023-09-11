@@ -3,6 +3,7 @@ package com.sparta.post.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.post.dto.ForResponseComment;
 import com.sparta.post.dto.PostRequestDto;
+import com.sparta.post.listener.LikesListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 @Table(name = "post") // 매핑할 테이블의 이름을 지정
 @NoArgsConstructor // 파라미터가 없는 기본 생성자를 생성
+@EntityListeners(LikesListener.class)
 public class Post extends Timestamped{
 
     @Id
@@ -33,6 +35,9 @@ public class Post extends Timestamped{
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
+
+    @Transient
+    private Long likes;
 
     public Post(PostRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
