@@ -66,7 +66,7 @@ public class CommentService {
         if(user.getRole().equals(UserRoleEnum.ADMIN)){
 
         } else if(!comment.getUsername().equals(user.getUsername()) ){
-            return new ResponseEntity<>(new Message(400, "작성자만 삭제/수정할 수 있습니다."), null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message(400, "작성자만 수정할 수 있습니다."), null, HttpStatus.BAD_REQUEST);
         }
 
 
@@ -99,7 +99,7 @@ public class CommentService {
         }
         if(user.getRole().equals(UserRoleEnum.ADMIN)){
         } else if(!comment.getUsername().equals(user.getUsername()) ){
-            return new ResponseEntity<>(new Message(400, "작성자만 삭제/수정할 수 있습니다."), null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Message(400, "작성자만 삭제할 수 있습니다."), null, HttpStatus.BAD_REQUEST);
         }
         // comment 삭제
         commentRepository.delete(comment);

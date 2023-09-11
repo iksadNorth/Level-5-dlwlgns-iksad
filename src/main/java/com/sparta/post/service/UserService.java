@@ -33,7 +33,7 @@ public class UserService {
         // username 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(username);
         if(checkUsername.isPresent()){
-            return new ResponseEntity<>(new Message(400, "중복된 username 입니다."), null, HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("중복된 username 입니다.");
         }
 
         // 사용자 ROLE 확인

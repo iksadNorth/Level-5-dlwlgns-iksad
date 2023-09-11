@@ -81,7 +81,7 @@ public class PostService {
         if(user.getRole().equals(UserRoleEnum.ADMIN)){
             System.out.println("운영자가 로그인하였습니다.");
         }else if(!username.equals(post.getUsername())){
-            throw new IllegalArgumentException("사용자 정보가 없습니다.");
+            throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
         }
 
         // post 내용 수정
@@ -111,7 +111,7 @@ public class PostService {
         if(user.getRole().equals(UserRoleEnum.ADMIN)){
             System.out.println("운영자가 로그인하였습니다.");
         }else if(!username.equals(post.getUsername())){
-            throw new IllegalArgumentException("사용자 정보가 없습니다.");
+            throw new IllegalArgumentException("작성자만 삭제할 수 있습니다.");
         }
 
         //post 삭제
