@@ -8,6 +8,7 @@ import com.sparta.post.entity.Message;
 import com.sparta.post.entity.Post;
 import com.sparta.post.jwt.JwtUtil;
 import com.sparta.post.service.PostService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,4 +63,8 @@ public class PostController {
         return postService.deletePost(id,  tokenValue);
     }
 
+    @GetMapping("/post/cate/{category}")
+    public Page<PostResponseDto> getCategoryPost(@PageableDefault(size=5) Pageable pageable, @PathVariable("category") String category){
+        return postService.getCategoryPost(pageable, category);
+    }
 }

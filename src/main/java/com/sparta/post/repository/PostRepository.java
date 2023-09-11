@@ -17,4 +17,5 @@ import java.util.Optional;
 public interface PostRepository extends CrudRepository<Post, Long> { //extends JpaRepository<Post, Long> {
    // List<Post> findAllByOrderByCreatedAt();
     Page<Post> findAllByOrderByCreatedAt(Pageable pageable);
+    Page<Post> findAllByCategoryOrderByCreatedAt(Pageable pageable, String category);
 }

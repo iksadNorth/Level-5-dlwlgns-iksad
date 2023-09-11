@@ -37,6 +37,9 @@ public class Post extends Timestamped{
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "category", nullable = false)
+    private String category;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
@@ -50,11 +53,13 @@ public class Post extends Timestamped{
     public Post(PostRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.category = requestDto.getCategory();
     }
 
     public void update(PostRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.category = requestDto.getCategory();
     }
     public void addCommentList(Comment comment){
         this.comments.add(comment);

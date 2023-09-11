@@ -39,8 +39,10 @@ public class PostService {
         String username = principal.getUsername();
 
         //RequestDto -> Entity
-        Post post = new Post(requestDto,username);
-
+        Post post = new Post(requestDto, username);
+        System.out.println("-------------------------------------------------");
+        System.out.println(post.getCategory());
+        System.out.println("-------------------------------------------------");
         //DB 저장
         Post savePost = postRepository.save(post);
 
@@ -65,6 +67,7 @@ public class PostService {
 
     public Page<PostResponseDto> getPosts(Pageable pageable) {
         Page<Post> postPage = postRepository.findAllByOrderByCreatedAt(pageable);
+
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
 
         for(Post post: postPage){
@@ -142,4 +145,14 @@ public class PostService {
     }
 
 
+    public Page<PostResponseDto> getCategoryPost(Pageable pageable, String category) {
+        Page<Post> postPage = postRepository.findAllByCategoryOrderByCreatedAt(pageable, category);
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+
+        for(Post post: postPage){
+            postResponseDtoList.add(new PostResponseDto(post));
+        }
+
+        return new PageImpl<>(postResponseDtoList, pageable, postPage.getTotalElements());
+    }
 }

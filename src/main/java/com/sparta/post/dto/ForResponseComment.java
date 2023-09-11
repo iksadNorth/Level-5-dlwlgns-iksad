@@ -18,7 +18,7 @@ public class ForResponseComment {
     private String username;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-
+    private String category;
     private Long commentLikes;
 
 

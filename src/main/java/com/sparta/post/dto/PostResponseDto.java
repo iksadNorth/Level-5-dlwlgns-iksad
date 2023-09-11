@@ -23,6 +23,7 @@ public class PostResponseDto{
   //  private String comments;
     private List<ForResponseComment> comments = new ArrayList<>();
 //    private List<CommentResponseDto> commentResponseDto = new ArrayList<>();
+    private String category;
     private Long postLikes;
 
     public PostResponseDto(Post post) {
@@ -41,6 +42,7 @@ public class PostResponseDto{
         this.content = post.getContent();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
+        this.category = post.getCategory();
         StringBuilder sb = new StringBuilder();
         List<Comment> commentlist = new ArrayList<>(post.getComments());
 
