@@ -5,7 +5,7 @@
 
 # ERD
 
-![ERD_Lv5](https://github.com/iksadNorth/Level-5-dlwlgns-iksad/assets/66674140/6fcaf47c-c541-43f9-8cc1-e7db18bf52aa)
+![ERD_Lv5](https://github.com/iksadNorth/Level-5-dlwlgns-iksad/assets/66674140/d43b57da-bc85-41a5-b2ab-5f93a91162b6)
 
 
 
